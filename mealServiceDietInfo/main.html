@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인페이지</title>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <script src="datepicker.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="main_thema.css">
+
+</head>
+<body>
+   
+
+    
+    <form action="index5.html" name="myForm" >
+
+        <div class="divMain">
+            <h1>데이터를 선택해주세요</h1>
+
+            <div class="divSelect">
+                <select name="ATPT_OFCDC_SC_CODE" id="ATPT_OFCDC_SC_CODE" class="select"  onchange="loadChild();" ></select>
+            </div>
+
+            <div class="divSelect">
+                <select name="SD_SCHUL_CODE" id="SD_SCHUL_CODE" class="select"></select>
+            </div>
+
+            <div class="divSelect">
+                <input id="RangePicker"  name="RangeDate"/>
+            </div>
+            
+            <div class="divSelect">
+                <input type="button"  value="검색" class="button" onclick="myFormSubmit();"> 
+            </div>
+        </div>
+
+    </form>
+
+
+    <script>
+
+        function myFormSubmit(){
+            let myForm = document.myForm;
+            let atptScCode = myForm.ATPT_OFCDC_SC_CODE.value;
+            let sdSchulCode = myForm.SD_SCHUL_CODE.value;
+
+            if(!atptScCode || !sdSchulCode){
+                alert('빈값이 있습니다!')
+            }else{
+                myForm.submit();
+            }
+        }
+
+        let ATPT_OFCDC_SC_CODE = [
+            {v:"",t:"교육청"},
+            {v:"B10",t:"서울특별시교육청"},
+            {v:"C10",t:"부산광역시교육청"},
+            {v:"D10",t:"대구광역시교육청"},
+            {v:"E10",t:"인천광역시교육청"},
+            {v:"F10",t:"광주광역시교육청"},
+            {v:"G10",t:"대전광역시교육청"},
+            {v:"H10",t:"울산광역시교육청"},
+            {v:"I10",t:"세종특별자치시교육청"},
+            {v:"J10",t:"경기도교육청"},
+            {v:"K10",t:"강원특별자치도교육청"},
+            {v:"M10",t:"충청북도교육청"},
+            {v:"N10",t:"충청남도교육청"},
+            {v:"P10",t:"전라북도교육청"},
+            {v:"Q10",t:"전라남도교육청"},
+            {v:"R10",t:"경상북도교육청"},
+            {v:"S10",t:"경상남도교육청"},
+            {v:"T10",t:"제주특별자치도교육청"}
+        ];
+
+
+ 
+        let seoul = [
+            {v:"7130172",t:"동북중학교"},
+            {v:"7021127",t:"동원중학교"}
+        ];
+
+        let busan = [
+            {v:"7181071",t:"감만중학교"},
+            {v:"7211012",t:"동백중학교"}
+        ];
+        
+        let daegu = [
+            {v:"7261010",t:"경일중학교"},
+            {v:"7281119",t:"서동중학교"}
+        ];
+        
+        let incheon = [
+            {v:"7331070",t:"삼산중학교"},
+            {v:"7321087",t:"인천남중학교"}
+        ];
+        
+        let gwangju = [
+            {v:"7401223",t:"광산중학교"},
+            {v:"7401226",t:"상일중학교"}
+        ];
+        
+        let daejeon = [
+            {v:"7451037",t:"대전서중학교"},
+            {v:"7441033",t:"동신중학교"}
+        ];
+        
+        let ulsan = [
+            {v:"7501036",t:"청량중학교"},
+            {v:"7491175",t:"호계중학교"}
+        ];
+        
+        let sejong = [
+            {v:"9300238",t:"반곡중학교"},
+            {v:"9300123",t:"새롬중학교"}
+        ];
+        
+        let gyeonggi = [
+            {v:"7642035",t:"갈뫼중학교"},
+            {v:"7771067",t:"감정중학교"}
+        ];
+        
+        let gangwon = [
+            {v:"7902031",t:"마차중학교"},
+            {v:"7872040",t:"미로중학교"}
+        ];
+        
+        let chungbuk = [
+            {v:"8051045",t:"속리산중학교"},
+            {v:"8092010",t:"송면중학교"}
+        ];
+        
+        let chungnam = [
+            {v:"8261015",t:"홍성중학교"},
+            {v:"8251008",t:"화성중학교"}
+        ];
+        
+        let jeonbuk = [
+            {v:"8361008",t:"입암중학교"},
+            {v:"8451074",t:"자유중학교"}
+        ];
+        
+        let jeonnam = [
+            {v:"8511026",t:"안산중학교"},
+            {v:"8721003",t:"안좌중학교"}
+        ];        
+
+        let gyeongbuk = [
+            {v:"8911039",t:"금천중학교"},
+            {v:"8761183",t:"기계중학교"}
+        ];
+
+
+        let gyeongnam = [
+            {v:"9151159",t:"사송중학교"}
+        ];
+
+        let jeju = [
+            {v:"9299017",t:"남원중학교"},
+            {v:"9296185",t:"노형중학교"}
+        ];
+
+
+
+
+        function loadSdSchulCodeParent(){
+            let h = [];
+            ATPT_OFCDC_SC_CODE.forEach(item => {
+                h.push('<option value="' + item.v + '">' + item.t + '</option>');
+            });
+            document.getElementById("ATPT_OFCDC_SC_CODE").innerHTML = h.join("");
+        }
+
+        function loadChild(){
+            let atptCode = document.getElementById("ATPT_OFCDC_SC_CODE").value;
+            let h = [];
+
+            if(atptCode == ""){
+
+            }else{
+
+                if(atptCode =="B10"){
+                    seoul.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="C10"){
+                    busan.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="D10"){
+                    daegu.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+
+                if(atptCode =="E10"){
+                    incheon.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="F10"){
+                    gwangju.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="G10"){
+                    daejeon.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="H10"){
+                    ulsan.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                
+                if(atptCode =="I10"){
+                    sejong.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="J10"){
+                    gyeonggi.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="K10"){
+                    gangwon.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="M10"){
+                    chungbuk.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="N10"){
+                    chungnam.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="P10"){
+                    jeonbuk.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="Q10"){
+                    jeonnam.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="R10"){
+                    gyeongbuk.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="S10"){
+                    gyeongnam.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="T10"){
+                    jeju.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }                
+
+
+            }
+            document.getElementById("SD_SCHUL_CODE").innerHTML = h.join("");
+        }
+        loadSdSchulCodeParent();
+        
+       
+    </script>
+        
+</body>
+</html>

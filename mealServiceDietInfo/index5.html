@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>식단정보</title>
+    <link rel="stylesheet" href="index_thema.css">
+</head>
+<body>
+
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous">
+    </script>
+
+    <script>
+        function Request(valuename)
+        {
+            let rtnval;
+            let nowAddress = unescape(location.href);
+            let parameters = new Array();
+            parameters = (nowAddress.slice(nowAddress.indexOf("?")+1,nowAddress.length)).split("&");
+            for(let i = 0 ; i < parameters.length ; i++){
+                if(parameters[i].split("=")[0] == valuename){
+                    rtnval = parameters[i].split("=")[1];
+                    if(rtnval == undefined || rtnval == null){
+                        rtnval = "";
+                    }
+                    return rtnval;
+                }
+            }
+        }
+
+        let ATPT_OFCDC_SC_CODE = Request("ATPT_OFCDC_SC_CODE");
+        let SD_SCHUL_CODE = Request("SD_SCHUL_CODE");
+        let MLSV_FROM_YMD = Request('MLSV_FROM_YMD');
+        let MLSV_TO_YMD = Request('MLSV_TO_YMD');
+        let RangeDate = Request('RangeDate');
+        let startdate = RangeDate.substring(0,8);
+        let enddate = RangeDate.substring(11,19);
+
+
+    </script>
+
+
+
+    <script>
+        // Key = "d6095f9b83ca4a16ba536006f8d0052e"   //인증키
+        // Type = "json"  //타입
+        // pIndex = "1"   //
+        // pSize = "100"   //
+
+        url = 'https://open.neis.go.kr/hub/mealServiceDietInfo?';
+        key = 'Key=d6095f9b83ca4a16ba536006f8d0052e&Type=json&pIndex=1&pSize=100&';
+        data = `ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&MLSV_FROM_YMD=${startdate}&MLSV_TO_YMD=${enddate}`;
+
+
+        url  = url + key + data;
+        //요청에 대한 정보 
+        $.ajax({
+            url: url , 
+            type:"POST"
+        })
+        //응답
+        .done(function( msg ) {
+
+            
+            const meal =JSON.parse(msg);            
+            //console.log(meal);
+
+
+            meal.mealServiceDietInfo[1].row.forEach(function (item) {
+                //console.log(item);
+
+                //학교명
+                let SCHUL_NM = document.createElement("td");
+                SCHUL_NM.className="td1";
+                SCHUL_NM.innerHTML = item.SCHUL_NM;
+
+                //식사명
+                let MMEAL_SC_NM = document.createElement("td");
+                MMEAL_SC_NM.className="td2";
+                MMEAL_SC_NM.innerHTML = item.MMEAL_SC_NM;
+                
+                //급식일자
+                let MLSV_YMD = document.createElement("td");
+                MLSV_YMD.className="td3";
+                MLSV_YMD.innerHTML = item.MLSV_YMD;
+                
+                //요리명
+                let DDISH_NM = document.createElement("td");
+                DDISH_NM.className="td4";
+                DDISH_NM.innerHTML = item.DDISH_NM;
+                
+                //급식인원수
+                let MLSV_FGR = document.createElement("td");
+                MLSV_FGR.className="td5";
+                MLSV_FGR.innerHTML = item.MLSV_FGR;
+                
+                //원산지정보
+                let ORPLC_INFO = document.createElement("td");
+                ORPLC_INFO.className="td6";
+                ORPLC_INFO.innerHTML = item.ORPLC_INFO;
+
+                //영양정보
+                let NTR_INFO = document.createElement("td");
+                NTR_INFO.className="td7";
+                NTR_INFO.innerHTML = item.NTR_INFO;   
+
+                //칼로리정보
+                let CAL_INFO = document.createElement("td");
+                CAL_INFO.className="td8";
+                CAL_INFO.innerHTML = item.CAL_INFO;                                
+
+                
+                let trTag = document.createElement("tr");
+                trTag.appendChild(SCHUL_NM);
+                trTag.appendChild(MMEAL_SC_NM);
+                trTag.appendChild(MLSV_YMD);
+                trTag.appendChild(DDISH_NM);
+                trTag.appendChild(MLSV_FGR);
+                trTag.appendChild(ORPLC_INFO);
+                trTag.appendChild(NTR_INFO);
+                trTag.appendChild(CAL_INFO);
+                mainTable.appendChild(trTag);
+
+                document.getElementById("mainDiv").innerHTML = item.SCHUL_NM + ' 식단정보' +'('+startdate + '~' + enddate +')' ;
+
+            });
+        });
+
+    </script>
+
+    <script>
+        function locHref(){
+            location.href = "main.html";
+        }
+    </script>
+
+
+
+    <div id="mainDiv">  </div>
+    <div class="buttonDiv">
+        <input type="button" value="돌아가기" class="button btnBlueGreen" onclick="locHref();">  
+    </div>
+    
+    <table id="mainTable">
+        <tr>
+            <th>학교명</th>
+            <th>식사명</th>
+            <th>급식일자</th>
+            <th>요리명</th>
+            <th>급식인원수</th>
+            <th>원산지정보</th>
+            <th>영양정보</th>
+            <th>칼로리정보</th>   
+        </tr>
+    </table>
+    
+</body>
+</html>

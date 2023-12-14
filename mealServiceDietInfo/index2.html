@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사송중학교 12월 식단표</title>
+
+
+</head>
+<body>
+    <h1> 사송중학교 12월 식단표</h1>
+
+    <p id="temperature"></p>
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous">
+    </script>
+
+
+    <script>
+        // Key = "d6095f9b83ca4a16ba536006f8d0052e"   //인증키
+        // Type = "json"  //타입
+        // pIndex = "1"   //
+        // pSize = "100"
+
+        //url = 'https://open.neis.go.kr/hub/mealServiceDietInfo?';
+        //key = 'Key=d6095f9b83ca4a16ba536006f8d0052e&Type=json&pIndex=1&pSize=100&';
+        //data = 'ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9151159&MLSV_FROM_YMD=20231201&MLSV_TO_YMD=20231231';
+
+
+        //https://open.neis.go.kr/hub/mealServiceDietInfo?ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9151159&MLSV_FROM_YMD=20231201&MLSV_TO_YMD=20231231
+
+        //요청에 대한 정보 
+        $.ajax({
+            url: 'https://open.neis.go.kr/hub/mealServiceDietInfo?' , 
+            key:{Key:"d6095f9b83ca4a16ba536006f8d0052e",Type:"json",pIndex:1,pSize:200},
+            data : {ATPT_OFCDC_SC_CODE: "S10",SD_SCHUL_CODE:"9151159",MLSV_FROM_YMD:20231201,MLSV_TO_YMD:20231231},
+        })
+        //요청에 대한 응답
+        .done(function( msg ) {
+            console.log(msg);
+            alert(msg);
+        });
+
+
+    </script>
+
+
+   
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 연습</title>
+</head>
+<body>
+    <h1>내 사이트임</h1>
+
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous">
+    </script>
+
+
+    <script>
+
+        // const Key = "d6095f9b83ca4a16ba536006f8d0052e"   //인증키
+        // const Type = "json"  //타입
+        // const pIndex = "1"   //
+        // const pSize = "100"
+
+        $(document).ready(function(){
+           
+
+            let url = 'https://open.neis.go.kr/hub/mealServiceDietInfo?';
+            let key = 'Key=d6095f9b83ca4a16ba536006f8d0052e&Type=json&pIndex=1&pSize=100&';
+            let param = 'ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9151159&MLSV_FROM_YMD=20231201&MLSV_TO_YMD=20231231';
+
+
+                       // + "Key=d6095f9b83ca4a16ba536006f8d0052e&Type=json&pIndex=1&pSize=100"
+           
+            ajaxCallApiTest(url,param,ApicallBack)
+        });
+
+        //url: "https://open.neis.go.kr/hub/mealServiceDietInfo?Key=d6095f9b83ca4a16ba536006f8d0052e&Type=json&pIndex=1&pSize=100",
+
+
+        function ajaxCallApiTest(url,param,callback){
+            //요청에 대한 정보 
+            $.ajax({
+                url : url,
+                method: "POST",
+                type: "POST",
+                data: param,
+                dataType: 'json',
+                success: callback,
+                error:function(request,textStatus){
+                    var format = new OpenLayers.Format.WFSDescribeFeatureType();
+                    var doc = request.responseXML;
+                    var descibeFeatureType = format.read(doc);
+                    alert("describeFeatureType = " + descibeFeatureType + " textStatus = " + textStatus);
+                }
+
+
+                //data: { ATPT_OFCDC_SC_CODE: "S10", SD_SCHUL_CODE: "9151159", MLSV_FROM_YMD: "20231201",MLSV_TO_YMD:"20231231" }
+                
+                
+            })
+            .done(function( msg ) {
+            alert( "Data Saved: " + msg );
+            });
+
+
+        }
+        //요청에 대한 응답
+
+
+    </script>
+
+</body>
+</html>

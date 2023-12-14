@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인페이지</title>
+</head>
+<body>
+           <!--
+            <option name="9151159" value="9151159" onclick="test('S10');">사송중학교</option>
+            <option name="9091062" value="9091062" onclick="test('S10');">가야중학교</option>
+            <option name="9091087" value="9091087" onclick="test(a);">경운중학교</option>
+            -->
+    
+    <form action="index5.html" name="myForm">
+        시도교육청코드 
+        <!--
+        <select name="ATPT_OFCDC_SC_CODE" id="ATPT_OFCDC_SC_CODE" >
+            <option value="B10">서울특별시교육청</option>
+            <option value="C10">부산광역시교육청</option>
+            <option value="D10">대구광역시교육청</option>
+            <option value="E10">인천광역시교육청</option>
+            <option value="F10">광주광역시교육청</option>
+            <option value="G10">대전광역시교육청</option>
+            <option value="H10">울산광역시교육청</option>
+            <option value="I10">세종특별자치시교육청</option>
+            <option value="J10">경기도교육청</option>
+            <option value="K10">강원특별자치도교육청</option>
+            <option value="M10">충청북도교육청</option>
+            <option value="N10">충청남도교육청</option>
+            <option value="P10">전라북도교육청</option>
+            <option value="Q10">전라남도교육청</option>
+            <option value="R10">경상북도교육청</option>
+            <option value="S10">경상남도교육청</option>
+            <option value="T10">제주특별자치도교육청</option>
+        </select>
+        -->
+        <select name="ATPT_OFCDC_SC_CODE" id="ATPT_OFCDC_SC_CODE"  onchange="loadFoodChild();"></select>
+        학교명         
+        <select name="SD_SCHUL_CODE" id="SD_SCHUL_CODE" ></select>
+
+        
+   
+        <input type="submit"  value="검색">
+      
+    </form>
+
+
+
+    <script>
+
+        let ATPT_OFCDC_SC_CODE = [
+
+            {v:"",t:""},
+            {v:"B10",t:"서울특별시교육청"},
+            {v:"C10",t:"부산광역시교육청"},
+            {v:"D10",t:"대구광역시교육청"},
+            {v:"E10",t:"인천광역시교육청"},
+            {v:"F10",t:"광주광역시교육청"},
+            {v:"G10",t:"대전광역시교육청"},
+            {v:"H10",t:"울산광역시교육청"},
+            {v:"I10",t:"세종특별자치시교육청"},
+            {v:"J10",t:"경기도교육청"},
+            {v:"K10",t:"강원특별자치도교육청"},
+            {v:"M10",t:"충청북도교육청"},
+            {v:"N10",t:"충청남도교육청"},
+            {v:"P10",t:"전라북도교육청"},
+            {v:"Q10",t:"전라남도교육청"},
+            {v:"R10",t:"경상북도교육청"},
+            {v:"S10",t:"경상남도교육청"},
+            {v:"T10",t:"제주특별자치도교육청"}
+        ];
+
+
+
+
+            
+        let seoul = [
+            {v:"7130165",t:"가락중학교"},
+            {v:"7130166",t:"가재울중학교"}
+        ];
+
+        let busan = [
+            {v:"7181070",t:"감만중학교"},
+            {v:"7211012",t:"동백중학교"}
+        ];
+        
+        let daegu = [
+            {v:"7261010",t:"경일중학교"},
+            {v:"7281119",t:"서동중학교"}
+        ];
+        
+        let incheon = [
+            {v:"7331070",t:"삼산중학교"},
+            {v:"7321087",t:"인천남중학교"}
+        ];
+        
+        let gwangju = [
+            {v:"7401223",t:"광산중학교"},
+            {v:"7401226",t:"상일중학교"}
+        ];
+        
+        let daejeon = [
+            {v:"7451037",t:"대전서중학교"},
+            {v:"7441033",t:"동신중학교"}
+        ];
+        
+        let ulsan = [
+            {v:"7501036",t:"청량중학교"},
+            {v:"7491175",t:"호계중학교"}
+        ];
+        
+        let sejong = [
+            {v:"9300238",t:"반곡중학교"},
+            {v:"9300123",t:"새롬중학교"}
+        ];
+        
+        let gyeonggi = [
+            {v:"7642035",t:"갈뫼중학교"},
+            {v:"7771067",t:"감정중학교"}
+        ];
+        
+        let gangwon = [
+            {v:"7902031",t:"마차중학교"},
+            {v:"7872040",t:"미로중학교"}
+        ];
+        
+        let chungbuk = [
+            {v:"8051045",t:"속리산중학교"},
+            {v:"8092010",t:"송면중학교"}
+        ];
+        
+        let chungnam = [
+            {v:"8261015",t:"홍성중학교"},
+            {v:"8251008",t:"화성중학교"}
+        ];
+        
+        let jeonbuk = [
+            {v:"8361008",t:"입암중학교"},
+            {v:"8451074",t:"자유중학교"}
+        ];
+        
+        let jeonnam = [
+            {v:"8511026",t:"안산중학교"},
+            {v:"8721003",t:"안좌중학교"}
+        ];        
+
+        let gyeongbuk = [
+            {v:"8911039",t:"금천중학교"},
+            {v:"8761183",t:"기계중학교"}
+        ];
+
+
+        let gyeongnam = [
+            {v:"9151159",t:"시송중학교"}
+        ];
+
+        let jeju = [
+            {v:"9299017",t:"남원중학교"},
+            {v:"9296185",t:"노형중학교"}
+        ];
+
+
+
+
+        function loadFoodParent(){
+            let h = [];
+            ATPT_OFCDC_SC_CODE.forEach(item => {
+                h.push('<option value="' + item.v + '">' + item.t + '</option>');
+            });
+
+            document.getElementById("ATPT_OFCDC_SC_CODE").innerHTML = h.join("");
+        }
+
+        function loadFoodChild(){
+            let atptCode = document.getElementById("ATPT_OFCDC_SC_CODE").value;
+            let h = [];
+
+            //console.log(parent_food);
+            if(atptCode == ""){
+
+            }else{
+
+                //console.log(parent_food);
+
+                if(atptCode =="B10"){
+                    seoul.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="C10"){
+                    busan.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="D10"){
+                    daegu.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+
+                if(atptCode =="E10"){
+                    incheon.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="F10"){
+                    gwangju.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="G10"){
+                    daejeon.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="H10"){
+                    ulsan.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                
+                if(atptCode =="I10"){
+                    sejong.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="J10"){
+                    gyeonggi.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="K10"){
+                    gangwon.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="M10"){
+                    chungbuk.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="N10"){
+                    chungnam.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="P10"){
+                    jeonbuk.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="Q10"){
+                    jeonnam.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="R10"){
+                    gyeongbuk.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="S10"){
+                    gyeongnam.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }
+                
+                if(atptCode =="T10"){
+                    jeju.forEach(item => {
+                        h.push('<option value="' + item.v + '">' + item.t + '</option>');
+                    });
+                }                
+
+
+
+
+            }
+            document.getElementById("SD_SCHUL_CODE").innerHTML = h.join("");
+        }
+
+        loadFoodParent();
+
+    </script>
+        
+
+    <script>
+
+        /*
+        let EduOffice = document.querySelector('.ATPT_OFCDC_SC_CODE');
+
+        
+        //EduOffice.addEventListener("change", () => {
+        EduOffice.onchange = function (){
+            let subSchulCode = document.querySelector('.SD_SCHUL_CODE');
+
+            let mainOption = EduOffice.options[EduOffice.selectedIndex].value;
+            console.log(mainOption);
+            // return mainOption;
+            //console.log(mainOption);
+
+        };
+
+        
+        let subOptions = {
+            seoul:['가락중학교(7130165)','가재울중학교(7130166)'],
+            busan:['감만중학교(7181070)','동백중학교(7211012)'],
+            daegu:['경일중학교(7261010)','서동중학교(7281119)'],
+            incheon:['삼산중학교(7331070)','인천남중학교(7321087)'],
+            gwangju:['광산중학교(7401223)','상일중학교(7401226)'],
+            daejeon:['대전서중학교(7451037)','동신중학교(7441033)'],
+            ulsan:['청량중학교(7501036)','호계중학교(7491175)'],
+            sejong:['반곡중학교(9300238)','새롬중학교(9300123)'],
+            gyeonggi:['갈뫼중학교(7642035)','감정중학교(7771067)'],
+            gangwon:['마차중학교(7902031)','미로중학교(7872040)'],
+            chungbuk:['속리산중학교(8051045)','송면중학교(8092010)'],
+            chungnam:['홍성중학교(8261015)','화성중학교(8251008)'],
+            jeonbuk:['입암중학교(8361008)','자유중학교(8451074)'],
+            jeonnam:['안산중학교(8511026)','안좌중학교(8721003)'],
+            gyeongbuk:['금천중학교(8911039)','기계중학교(8761183)'],
+            gyeongnam:['사송중학교(9151159)'],
+            jeju:['남원중학교(9299017)','노형중학교(9296185)']
+
+        };
+
+
+       
+
+        let subOption = "";
+        switch(mainOption){
+            case 'B10':
+                subOption = subOptions.seoul;
+                break;
+            case 'C10':
+                subOption = subOptions.busan;
+                break;
+            case 'D10':
+                subOption = subOptions.daegu;
+                break;
+            case 'E10':
+                subOption = subOptions.incheon;
+                break;
+            case 'F10':
+                subOption = subOptions.gwangju;
+                break;
+            case 'G10':
+                subOption = subOptions.daejeon;
+                break;                                                
+            case 'H10':
+                subOption = subOptions.ulsan;
+                break;   
+            case 'I10':
+                subOption = subOptions.sejong;
+                break;   
+            case 'J10':
+                subOption = subOptions.gyeonggi;
+                break;   
+            case 'K10':
+                subOption = subOptions.gangwon;
+                break;   
+            case 'M10':
+                subOption = subOptions.chungbuk;
+                break;   
+            case 'N10':
+                subOption = subOptions.chungnam;
+                break;   
+            case 'P10':
+                subOption = subOptions.jeonbuk;
+                break;   
+            case 'Q10':
+                subOption = subOptions.jeonnam;
+                break;   
+            case 'R10':
+                subOption = subOptions.gyeongbuk;
+                break;                                                                                                                                   
+            case 'R10':
+                subOption = subOptions.gyeongnam;
+                break;    
+            case 'T10':
+                subOption = subOptions.jeju;
+                break;                   
+        }
+
+        EduOffice.options.length=0;
+        for(let i=0; i<subOption.length; i++){
+            let option = document.createElement('option');
+            option.innerText = subOption[i];
+            //option.value = subOption[i];
+            subSchulCode.append(option);
+        }
+
+        */
+        
+
+
+    </script>
+</body>
+</html>

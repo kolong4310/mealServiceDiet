@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사송중학교 12월 식단표</title>
+    <script src="json.js" defer></script>
+    <style>
+    #out {
+        border: 1px solid red;
+      }
+
+    </style>
+
+
+</head>
+<body>
+
+    <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous">
+    </script>
+
+
+    <script>
+        // Key = "d6095f9b83ca4a16ba536006f8d0052e"   //인증키
+        // Type = "json"  //타입
+        // pIndex = "1"   //
+        // pSize = "100"
+
+        url = 'https://open.neis.go.kr/hub/mealServiceDietInfo?';
+        key = 'Key=d6095f9b83ca4a16ba536006f8d0052e&Type=json&pIndex=1&pSize=100&';
+        data = 'ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9151159&MLSV_FROM_YMD=20231201&MLSV_TO_YMD=20231231';
+
+        //https://open.neis.go.kr/hub/mealServiceDietInfo?ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9151159&MLSV_FROM_YMD=20231201&MLSV_TO_YMD=20231231
+
+        url  = url + key + data;
+        //요청에 대한 정보 
+        $.ajax({
+            url: url , 
+            type:"POST",
+        })
+        //요청에 대한 응답
+        .done(function( msg ) {
+            //console.log(JSON.stringify(msg));
+            //alert(msg);
+            //console.log(msg);
+
+            const meal =JSON.parse(msg);
+            //console.log(meal.mealServiceDietInfo[1].row.length);
+
+           
+
+
+            for(let i=0; i<meal.mealServiceDietInfo[1].row.length; i++){
+
+                delete meal.mealServiceDietInfo[1].row[i].ATPT_OFCDC_SC_CODE;
+                delete meal.mealServiceDietInfo[1].row[i].ATPT_OFCDC_SC_NM;
+                delete meal.mealServiceDietInfo[1].row[i].CAL_INFO;
+                delete meal.mealServiceDietInfo[1].row[i].NTR_INFO;
+                delete meal.mealServiceDietInfo[1].row[i].MLSV_FGR;
+                delete meal.mealServiceDietInfo[1].row[i].LOAD_DTM;
+                delete meal.mealServiceDietInfo[1].row[i].MMEAL_SC_CODE;
+                delete meal.mealServiceDietInfo[1].row[i].MMEAL_SC_NM;
+                delete meal.mealServiceDietInfo[1].row[i].ORPLC_INFO;
+                delete meal.mealServiceDietInfo[1].row[i].SD_SCHUL_CODE;
+                delete meal.mealServiceDietInfo[1].row[i].MLSV_TO_YMD;
+                delete meal.mealServiceDietInfo[1].row[i].MLSV_FROM_YMD;
+
+                console.log(meal.mealServiceDietInfo[1].row[i]);
+                //document.getElementById('a1').innerHTML = obj.mealServiceDietInfo[1].row[i].DDISH_NM;
+            }
+
+             //document.getElementById('a1').innerHTML = meal.mealServiceDietInfo[1].row;
+
+        });
+    
+
+
+    </script>
+
+    output: 
+    <p id='a1'>
+    </p>
+   
+
+</body>
+</html>
